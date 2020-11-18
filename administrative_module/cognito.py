@@ -11,6 +11,7 @@ class CognitoUser:
     def __init__(self):
         self.log.info("initializing CognitoUser")
 
+    # this method allows the registration of a user in AWS cognito
     def register_user(self, username, password, email, first_name, middle_name, last_name, phone_number):
         is_registered = False
         cognito = Cognito(self.USER_POOL_ID, self.CLIENT_ID,
