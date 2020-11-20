@@ -2,10 +2,7 @@ from pycognito import Cognito
 from helper_module.helper import Helper
 
 
-
-
-#This class supports user regestration and user authentication
-
+# This class supports user registration and user authentication utilizing AWS cognito service
 class CognitoUser:
 
     def __init__(self, user_pool_id, client_id, client_secret, username):
@@ -36,7 +33,7 @@ class CognitoUser:
                 self.log.error(str(e))
         return is_registered
 
-    #This method allows for the user to confirm registration
+    # This method allows for the user to confirm registration
     def confirm_signup(self, confirmation_code):
         signup_confirmed = False
         self.log.info("confirming user=" + self.username + " with registration code " + confirmation_code)
@@ -48,6 +45,7 @@ class CognitoUser:
             self.log.error(str(e))
         return signup_confirmed
 
+    # This method allows a user to be authenticated with AWS cognito authentication
     def authenticate_user(self, password):
         is_authenticated = False
         self.log.info("Authenticating user = " + self.username)
