@@ -1,10 +1,10 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtGui import QGuiApplication
 
 
 class CerebroHome(QMainWindow):
-
     closed = pyqtSignal()
 
     def __init__(self, parent=None):
@@ -136,6 +136,16 @@ class CerebroHome(QMainWindow):
         self.upload_button.setText(_translate("MainWindow", "Upload"))
         self.decode_button.setText(_translate("MainWindow", "Decode"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.upload_button.clicked.connect(self.open_file)
+        QGuiApplication.setQuitOnLastWindowClosed(False)
+
+
+
+    def open_file(self):
+
+        filename = QFileDialog.getOpenFileName()
+        print(filename)
+        self.file_name_field.setText(filename[0])
 
 
 
