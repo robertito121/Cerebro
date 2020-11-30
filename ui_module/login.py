@@ -69,14 +69,14 @@ class CerebroLogin(QMainWindow):
         username = self.username_field.text()
         password = self.password_field.text()
         cognito = CognitoUser(user_pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret, username=username)
-        authenticated_user = cognito.get_user_info(password)
-        first_name = authenticated_user.__getattr__('first_name')
-        middle_name = authenticated_user.__getattr__('middle_name')
-        last_name = authenticated_user.__getattr__('last_name')
-        email = authenticated_user.__getattr__('email')
-        phone_number = authenticated_user.__getattr__('phone_number')
         is_authenticated = cognito.authenticate_user(password)
         if is_authenticated:
+            authenticated_user = cognito.get_user_info(password)
+            first_name = authenticated_user.__getattr__('first_name')
+            middle_name = authenticated_user.__getattr__('middle_name')
+            last_name = authenticated_user.__getattr__('last_name')
+            email = authenticated_user.__getattr__('email')
+            phone_number = authenticated_user.__getattr__('phone_number')
             window = CerebroHome(self)
             window.username_label.setText(username)
             window.first_name_label.setText(first_name)
@@ -87,6 +87,10 @@ class CerebroLogin(QMainWindow):
             window.closed.connect(self.show)
             window.show()
             self.hide()
+        else:
+            error_dialog = QtWidgets.QErrorMessage()
+            error_dialog.showMessage("username or password is incorrect, please try again!")
+            error_dialog.exec_()
 
     # opens the Register screen
     def register(self):

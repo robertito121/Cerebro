@@ -22,8 +22,8 @@ class CerebroHome(QMainWindow):
         self.gridLayout.setObjectName("gridLayout")
         self.formLayout = QtWidgets.QFormLayout()
         self.formLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
-        self.formLayout.setLabelAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.formLayout.setFormAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.formLayout.setLabelAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.formLayout.setFormAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.formLayout.setContentsMargins(0, -1, 300, -1)
         self.formLayout.setHorizontalSpacing(6)
         self.formLayout.setObjectName("formLayout")
@@ -139,16 +139,7 @@ class CerebroHome(QMainWindow):
         self.upload_button.clicked.connect(self.open_file)
         QGuiApplication.setQuitOnLastWindowClosed(False)
 
-
-
     def open_file(self):
-
         filename = QFileDialog.getOpenFileName()
         print(filename)
         self.file_name_field.setText(filename[0])
-
-
-
-
-
-
