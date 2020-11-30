@@ -1,5 +1,7 @@
 from pycognito import Cognito
+from pycognito.aws_srp import AWSSRP
 from helper_module.helper import Helper
+import boto3
 
 
 # This class supports user registration and user authentication utilizing AWS cognito service
@@ -56,3 +58,23 @@ class CognitoUser:
         except Exception as e:
             self.log.error(str(e))
         return is_authenticated
+
+    # this method returns all the personal information of a given username
+    def get_user_info(self, password):
+        self.log.info("Getting user info for username = " + self.username)
+        user = None
+        try:
+            client = boto3.client('cognito-idp', region_name='us-east-1')
+            aws = AWSSRP(username=self.username, password=password, pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret, client=client)
+            tokens = aws.authenticate_user()
+            access_token = tokens.get('AuthenticationResult').get('AccessToken')
+            cognito = Cognito(self.user_pool_id, self.client_id, client_secret=self.client_secret, username=self.username, access_token=access_token)
+            user = cognito.get_user(attr_map={"given_name": "first_name",
+                                                   "middle_name": "middle_name",
+                                                   "family_name": "last_name",
+                                                   "email": "email",
+                                                   "phone_number": "phone_number"
+                                                   })
+        except Exception as e:
+            print(str(e.with_traceback()))
+        return user

@@ -4,7 +4,9 @@ from PyQt5.QtWidgets import QMainWindow
 from administrative_module.cognito import CognitoUser
 import os
 
+from ui_module.home_screen import CerebroHome
 
+# This class serves the Register UI
 class CerebroRegister(QMainWindow):
     closed = pyqtSignal()
 
@@ -44,6 +46,9 @@ class CerebroRegister(QMainWindow):
         self.password_field.setGeometry(QtCore.QRect(420, 130, 161, 21))
         self.password_field.setObjectName("password_field")
         self.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.email_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.email_field.setGeometry(QtCore.QRect(150, 190, 331, 21))
+        self.email_field.setObjectName("email_field")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(100, 110, 91, 16))
         self.label_4.setObjectName("label_4")
@@ -53,8 +58,11 @@ class CerebroRegister(QMainWindow):
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(460, 110, 91, 16))
         self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(290, 170, 51, 16))
+        self.label_7.setObjectName("label_7")
         self.submit_button = QtWidgets.QPushButton(self.centralwidget)
-        self.submit_button.setGeometry(QtCore.QRect(250, 190, 113, 32))
+        self.submit_button.setGeometry(QtCore.QRect(250, 230, 113, 32))
         self.submit_button.setObjectName("submit_button")
         self.submit_button.clicked.connect(self.register)
         self.setCentralWidget(self.centralwidget)
@@ -67,14 +75,31 @@ class CerebroRegister(QMainWindow):
         self.label_4.setText(_translate("MainWindow", "Phone Number"))
         self.label_5.setText(_translate("MainWindow", "Username"))
         self.label_6.setText(_translate("MainWindow", "Password"))
+        self.label_7.setText(_translate("MainWindow", "Email"))
         self.submit_button.setText(_translate("MainWindow", "Submit"))
 
+    # registers a new user into AWS cognito service
     def register(self):
+        first_name = self.first_name_field.text()
+        middle_name = self.middle_name_field.text()
         last_name = self.last_name_field.text()
-        phone_number = self.phone_number_field.text()
+        phone_number = '+1' + self.phone_number_field.text()
         username = self.username_field.text()
+        email = self.email_field.text()
         password = self.password_field.text()
         cognito = CognitoUser(user_pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret,username=username)
-        print(self.user_pool_id)
+        is_registered = cognito.register_user(password, email, first_name, middle_name, last_name, phone_number)
+        if is_registered:
+            window = CerebroHome(self)
+            window.username_label.setText(username)
+            window.first_name_label.setText(first_name)
+            window.middle_name_label.setText(middle_name)
+            window.last_name_label.setText(last_name)
+            window.email_label.setText(email)
+            window.phone_number_label.setText(phone_number)
+            window.closed.connect(self.show)
+            window.show()
+            self.hide()
+
 
 

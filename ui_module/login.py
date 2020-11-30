@@ -1,10 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from administrative_module.cognito import CognitoUser
+from ui_module.home_screen import CerebroHome
 from ui_module.register import CerebroRegister
 import os
 
-
+#This class serves the Login UI
 class CerebroLogin(QMainWindow):
 
     def __init__(self):
@@ -37,6 +38,7 @@ class CerebroLogin(QMainWindow):
         self.signin_button.setGeometry(QtCore.QRect(380, 370, 113, 32))
         self.signin_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.signin_button.setObjectName("signin_button")
+        self.signin_button.clicked.connect(self.sign_in)
         self.register_button = QtWidgets.QCommandLinkButton(self.centralwidget)
         self.register_button.setGeometry(QtCore.QRect(380, 410, 113, 32))
         self.register_button.clicked.connect(self.register)
@@ -63,13 +65,33 @@ class CerebroLogin(QMainWindow):
         self.register_button.setText(_translate("MainWindow", "Register"))
         self.menuCerebro.setTitle(_translate("MainWindow", "Cerebro"))
 
+    # Allows user to sign in
     def sign_in(self):
         username = self.username_field.text()
         password = self.password_field.text()
-        cognito = CognitoUser(user_pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret,username=username)
+        cognito = CognitoUser(user_pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret, username=username)
         is_authenticated = cognito.authenticate_user(password)
-        print(is_authenticated)
+        if is_authenticated:
+            authenticated_user = cognito.get_user_info(password)
+            first_name = authenticated_user.__getattr__('first_name')
+            middle_name = authenticated_user.__getattr__('middle_name')
+            last_name = authenticated_user.__getattr__('last_name')
+            email = authenticated_user.__getattr__('email')
+            phone_number = authenticated_user.__getattr__('phone_number')
+            window = CerebroHome(self)
+            window.username_label.setText(username)
+            window.first_name_label.setText(first_name)
+            window.middle_name_label.setText(middle_name)
+            window.last_name_label.setText(last_name)
+            window.email_label.setText(email)
+            window.phone_number_label.setText(phone_number)
+            window.closed.connect(self.show)
+            window.show()
+            print(is_authenticated)
+            print(first_name + last_name)
+            self.hide()
 
+    # opens the Register screen
     def register(self):
         window = CerebroRegister(self)
         window.closed.connect(self.show)
@@ -77,6 +99,7 @@ class CerebroLogin(QMainWindow):
         self.hide()
 
 
+#applications entry point
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
