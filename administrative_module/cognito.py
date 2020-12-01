@@ -67,17 +67,6 @@ class CognitoUser:
     ##########################################################################################################################
     ###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###
     ##########################################################################################################################
-    try: #Yeah this will be moved to the top
-        from PIL import Image #Imports the necessary files to get pytesseract to work#
-    except ImportError:
-        import Image
-    import pytesseract    
-        
-    def ocr(image_file):#Grant's Module
-    #This function will handle the image character recognition and storage
-        input_string = pytesseract.image_to_string(Image.open(imgage_file))#This converts the picture into a string
-        with open('input_string.txt', 'w') as f:#This creates a file to store the input string into the folder that the application is installed
-            f.write("input_string %d" % input_string)
     def translate():#Grant's storage module
         LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'#This section is used to brute force the code
         for key in range(len(LETTERS)):
