@@ -1,0 +1,105 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtWidgets import QMainWindow
+from administrative_module.cognito import CognitoUser
+import os
+
+from ui_module.home_screen import CerebroHome
+
+# This class serves the Register UI
+class CerebroRegister(QMainWindow):
+    closed = pyqtSignal()
+
+    def __init__(self, parent=None):
+        QMainWindow.__init__(self, parent)
+        self.user_pool_id = os.getenv("USER_POOL_ID")
+        self.client_id = os.getenv("CLIENT_ID")
+        self.client_secret = os.getenv("CLIENT_SECRET")
+        self.resize(617, 271)
+        self.centralwidget = QtWidgets.QWidget(self)
+        self.centralwidget.setObjectName("centralwidget")
+        self.first_name_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.first_name_field.setGeometry(QtCore.QRect(60, 60, 151, 21))
+        self.first_name_field.setObjectName("first_name_field")
+        self.middle_name_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.middle_name_field.setGeometry(QtCore.QRect(240, 60, 141, 21))
+        self.middle_name_field.setObjectName("middle_name_field")
+        self.last_name_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.last_name_field.setGeometry(QtCore.QRect(410, 60, 161, 21))
+        self.last_name_field.setObjectName("last_name_field")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(100, 40, 71, 16))
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(270, 40, 81, 16))
+        self.label_2.setObjectName("label_2")
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(450, 40, 81, 16))
+        self.label_3.setObjectName("label_3")
+        self.phone_number_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.phone_number_field.setGeometry(QtCore.QRect(60, 130, 161, 21))
+        self.phone_number_field.setObjectName("phone_number_field")
+        self.username_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.username_field.setGeometry(QtCore.QRect(240, 130, 161, 21))
+        self.username_field.setObjectName("username_field")
+        self.password_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.password_field.setGeometry(QtCore.QRect(420, 130, 161, 21))
+        self.password_field.setObjectName("password_field")
+        self.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.email_field = QtWidgets.QLineEdit(self.centralwidget)
+        self.email_field.setGeometry(QtCore.QRect(150, 190, 331, 21))
+        self.email_field.setObjectName("email_field")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(100, 110, 91, 16))
+        self.label_4.setObjectName("label_4")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(280, 110, 91, 16))
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        self.label_6.setGeometry(QtCore.QRect(460, 110, 91, 16))
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(290, 170, 51, 16))
+        self.label_7.setObjectName("label_7")
+        self.submit_button = QtWidgets.QPushButton(self.centralwidget)
+        self.submit_button.setGeometry(QtCore.QRect(250, 230, 113, 32))
+        self.submit_button.setObjectName("submit_button")
+        self.submit_button.clicked.connect(self.register)
+        self.setCentralWidget(self.centralwidget)
+        QtCore.QMetaObject.connectSlotsByName(self)
+        _translate = QtCore.QCoreApplication.translate
+        self.setWindowTitle(_translate("MainWindow", "Register"))
+        self.label.setText(_translate("MainWindow", "First Name"))
+        self.label_2.setText(_translate("MainWindow", "Middle Name"))
+        self.label_3.setText(_translate("MainWindow", "Last Name"))
+        self.label_4.setText(_translate("MainWindow", "Phone Number"))
+        self.label_5.setText(_translate("MainWindow", "Username"))
+        self.label_6.setText(_translate("MainWindow", "Password"))
+        self.label_7.setText(_translate("MainWindow", "Email"))
+        self.submit_button.setText(_translate("MainWindow", "Submit"))
+
+    # registers a new user into AWS cognito service
+    def register(self):
+        first_name = self.first_name_field.text()
+        middle_name = self.middle_name_field.text()
+        last_name = self.last_name_field.text()
+        phone_number = '+1' + self.phone_number_field.text()
+        username = self.username_field.text()
+        email = self.email_field.text()
+        password = self.password_field.text()
+        cognito = CognitoUser(user_pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret,username=username)
+        is_registered = cognito.register_user(password, email, first_name, middle_name, last_name, phone_number)
+        if is_registered:
+            window = CerebroHome(self)
+            window.username_label.setText(username)
+            window.first_name_label.setText(first_name)
+            window.middle_name_label.setText(middle_name)
+            window.last_name_label.setText(last_name)
+            window.email_label.setText(email)
+            window.phone_number_label.setText(phone_number)
+            window.closed.connect(self.show)
+            window.show()
+            self.hide()
+
+
+

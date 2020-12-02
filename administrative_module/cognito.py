@@ -1,34 +1,33 @@
 from pycognito import Cognito
+from pycognito.aws_srp import AWSSRP
 from helper_module.helper import Helper
+import boto3
 
 
-
+# This class supports user registration and user authentication utilizing AWS cognito service
 class CognitoUser:
-    USER_POOL_ID = ''
-    CLIENT_ID = ''
-    CLIENT_SECRET = ''
-    log = Helper.get_logger()
 
-    def __init__(self):
-        self.log.info("initializing CognitoUser")
+    def __init__(self, user_pool_id, client_id, client_secret, username):
+        self.user_pool_id = user_pool_id
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.username = username
+        self.cognito = Cognito(user_pool_id, client_id, client_secret=client_secret, username=username)
+        self.log = Helper.get_logger()
 
-    def register_user(self, username, password, email, first_name, middle_name, last_name, phone_number):
+    # this method allows the registration of a user in AWS cognito
+    def register_user(self, password, email, first_name, middle_name, last_name, phone_number):
         is_registered = False
-        cognito = Cognito(self.USER_POOL_ID, self.CLIENT_ID,
-                          client_secret=self.CLIENT_SECRET,
-                          username=username)
-
-        self.log.info("registering user with username " + username)
+        self.log.info("registering user with username " + self.username)
         try:
-
-            cognito.set_base_attributes(email=email,
-                                        given_name=first_name,
-                                        middle_name=middle_name,
-                                        family_name=last_name,
-                                        phone_number=phone_number)
-            cognito.register(username=username, password=password)
+            self.cognito.set_base_attributes(email=email,
+                                             given_name=first_name,
+                                             middle_name=middle_name,
+                                             family_name=last_name,
+                                             phone_number=phone_number)
+            self.cognito.register(username=self.username, password=password)
             is_registered = True
-            self.log.info("username " + username + " registered successfully")
+            self.log.info("username " + self.username + " registered successfully")
         except Exception as e:
             if "UsernameExistException" in str(e):
                 self.log.error("Username already exist, please user another username")
@@ -36,54 +35,46 @@ class CognitoUser:
                 self.log.error(str(e))
         return is_registered
 
-    def confirm_signup(self, username, confirmation_code):
+    # This method allows for the user to confirm registration
+    def confirm_signup(self, confirmation_code):
         signup_confirmed = False
-        cognito = Cognito(self.USER_POOL_ID, self.CLIENT_ID,
-                          client_secret=self.CLIENT_SECRET,
-                          username=username)
-        self.log.info("confirming user=" + username + " with registration code " + confirmation_code)
+        self.log.info("confirming user=" + self.username + " with registration code " + confirmation_code)
         try:
-            cognito.confirm_sign_up(confirmation_code, username=username)
+            self.cognito.confirm_sign_up(confirmation_code, username=self.username)
             signup_confirmed = True
-            self.log.info("user = " + username + " has been confirmed ")
+            self.log.info("user = " + self.username + " has been confirmed ")
         except Exception as e:
             self.log.error(str(e))
         return signup_confirmed
 
-    def authenticate_user(self, username, password):
+    # This method allows a user to be authenticated with AWS cognito authentication
+    def authenticate_user(self, password):
         is_authenticated = False
-        cognito = Cognito(self.USER_POOL_ID,
-                          self.CLIENT_ID,
-                          client_secret=self.CLIENT_SECRET,
-                          username=username)
-        self.log.info("Authenticating user = " + username)
+        self.log.info("Authenticating user = " + self.username)
         try:
-            cognito.authenticate(password=password)
+            self.cognito.authenticate(password=password)
             is_authenticated = True
-            self.log.info("user = " + username + " has been authenticated")
+            self.log.info("user = " + self.username + " has been authenticated")
         except Exception as e:
             self.log.error(str(e))
         return is_authenticated
-    ##########################################################################################################################
-    ###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###GRANTS SECTION###
-    ##########################################################################################################################
-    def translate():#Grant's storage module
-        LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'#This section is used to brute force the code
-        for key in range(len(LETTERS)):
-           translated = ''
-           for symbol in input_string:
-              if symbol in LETTERS:
-                 num = LETTERS.find(symbol)
-                 num = num - key
-                 if num < 0:
-                    num = num + len(LETTERS)
-                 translated = translated + LETTERS[num]
-              else:
-                 translated = translated + symbol#End of bruteforce
-            if translated(lang="eng+fra+ger+ita"):#Breaks out of loop if there is a language hit
-                final_output=translated
-                break
-            print('Hacking key #%s: %s' % (key, translated))#This is for testing
-        with open('final_output.txt', 'w') as f:#This creates a file to store the input string into the folder that the application is installed
-            f.write("final_output %d" % final_output)
-        
+
+    # this method returns all the personal information of a given username
+    def get_user_info(self, password):
+        self.log.info("Getting user info for username = " + self.username)
+        user = None
+        try:
+            client = boto3.client('cognito-idp', region_name='us-east-1')
+            aws = AWSSRP(username=self.username, password=password, pool_id=self.user_pool_id, client_id=self.client_id, client_secret=self.client_secret, client=client)
+            tokens = aws.authenticate_user()
+            access_token = tokens.get('AuthenticationResult').get('AccessToken')
+            cognito = Cognito(self.user_pool_id, self.client_id, client_secret=self.client_secret, username=self.username, access_token=access_token)
+            user = cognito.get_user(attr_map={"given_name": "first_name",
+                                                   "middle_name": "middle_name",
+                                                   "family_name": "last_name",
+                                                   "email": "email",
+                                                   "phone_number": "phone_number"
+                                                   })
+        except Exception as e:
+            print(str(e.with_traceback()))
+        return user
