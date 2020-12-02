@@ -1,7 +1,11 @@
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, QFileInfo
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
 from PyQt5.QtGui import QGuiApplication
+from pathlib import Path
+from storage_module.dynamo import DynamoModule
+from digital_processing_module.digital_processing import OCR
+import time
 
 
 class CerebroHome(QMainWindow):
@@ -136,10 +140,22 @@ class CerebroHome(QMainWindow):
         self.upload_button.setText(_translate("MainWindow", "Upload"))
         self.decode_button.setText(_translate("MainWindow", "Decode"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
-        self.upload_button.clicked.connect(self.open_file)
+        self.upload_button.clicked.connect(self.convert_to_digital_str)
         QGuiApplication.setQuitOnLastWindowClosed(False)
 
-    def open_file(self):
-        filename = QFileDialog.getOpenFileName()
-        print(filename)
-        self.file_name_field.setText(filename[0])
+    def convert_to_digital_str(self):
+        file_path = QFileDialog.getOpenFileName()[0]
+        if file_path != "":
+            username = self.username_label.text()
+            file_info = QFileInfo(file_path)
+            file_size = file_info.size()
+            file_type = Path(file_path).suffix
+            self.file_name_field.setText(file_path)
+            dynamo = DynamoModule()
+            dynamo.create_item(username, str(time.time()), file_type, str(file_size))
+            digital_string = OCR.handwritten_to_string(file_path)
+            self.uploaded_text_field.setText(digital_string)
+
+
+
+
