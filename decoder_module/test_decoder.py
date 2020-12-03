@@ -11,9 +11,9 @@ def handwritten_to_string(file_path):
 
 def crack_ceasar(string):
         # message = 'GUVF VF ZL FRPERG ZRFFNTR.'#This is here for testing purposes
-        LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'  # This is the alpahabet that will be used for the ceaser cipher
+        LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'  # This is the alpahabet that will be used for the ceaser cipher 
         final_output = ''
-        fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt")
+        fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt",encoding='utf8')
         words = fo.readlines()
         fo.close()
         for key in range(len(LETTERS)):
@@ -39,4 +39,4 @@ def crack_simple(self,string):
     x=1
 def crack_vigenere(self,string):
     x=1
-crack_ceasar("RK PB JRG KH RQ A JDPHV PRGH")
+crack_ceasar("JDPHV")

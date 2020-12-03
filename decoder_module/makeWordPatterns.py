@@ -27,7 +27,7 @@ def getWordPattern(word):
 def main():
     allPatterns = {}
 
-    fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt")
+    fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt",encoding="utf8")
     wordList = fo.read().split('\n')
     fo.close()
 
@@ -42,7 +42,7 @@ def main():
 
     # This is code that writes code. The wordPatterns.py file contains
     # one very, very large assignment statement.
-    fo = open('wordPatterns.py', 'w')
+    fo = open(r'C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\wordPatterns.py', 'w',encoding='utf8')
     fo.write('allPatterns = ')
     fo.write(pprint.pformat(allPatterns))
     fo.close()

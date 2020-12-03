@@ -7,11 +7,11 @@
 # (There must be a "dictionary.txt" file in this directory with all English
 # words in it, one word per line. You can download this from
 # http://invpy.com/dictionary.txt)
-UPPERLETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+UPPERLETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
 LETTERS_AND_SPACE = UPPERLETTERS + UPPERLETTERS.lower() + ' \t\n'
 
 def loadDictionary():
-    dictionaryFile = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt")
+    dictionaryFile = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt",encoding="utf8")
     englishWords = {}
     for word in dictionaryFile.read().split('\n'):
         englishWords[word] = None

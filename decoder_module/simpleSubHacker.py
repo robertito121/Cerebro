@@ -7,27 +7,37 @@ if not os.path.exists('wordPatterns.py'):
     makeWordPatterns.main() # create the wordPatterns.py file
 import wordPatterns
 
-LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-nonLettersOrSpacePattern = re.compile('[^A-Z\s]')
+LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
+nonLettersOrSpacePattern = re.compile('[^A-Â\s]')
 
 def main():
 #This is what is being decrypted
-    message = """“vu’m y ktoervyz ykkyzyuem,” myvw uqt lxxvotz ul uqt uzyatrrtz, pynvjp svuq y otzuyvj ywhvzyuvlj yu uqt wtavot, svuq sqvoq qt sym, lx olezmt, uqlzlepqrf xyhvrvyz. vu ykktyztw uqyu uqt uzyatrrtz qyw ztmkljwtw ul uqt vjavuyuvlj lx uqt olhhyjwyju ljrf leu lx klrvutjtmm, sqtj qt qyw cttj ymbtw ul yuutjw uqt tdtoeuvlj lx y mlrwvtz oljwthjtw xlz wvmlctfvjp yjw vjmeruvjp qvm mektzvlz. lx olezmt, vjutztmu vj uqt tdtoeuvlj sym jlu atzf qvpq tatj vj uqt ktjyr olrljf vumtrx. yu rtymu, qtzt vj uqt mhyrr, wttk, myjwf ayrrtf, orlmtw vj lj yrr mvwtm cf cyzztj mrlktm, ykyzu xzlh uqt lxxvotz yjw uqt uzyatrrtz uqtzt stzt kztmtju ljrf uqt oljwthjtw, y ayoyju-rllbvjp hyj svuq y czlyw hleuq yjw wvrykvwyutw qyvz yjw xyot, yjw uqt mlrwvtz, sql qtrw uqt qtyaf oqyvj ul sqvoq stzt oljjtoutw uqt mhyrr oqyvjm sqvoq clejw uqt oljwthjtw hyj cf qvm xttu yjw szvmu cljtm, ym strr ym cf qvm jtob, yjw sqvoq stzt yrml rvjbtw ul tyoq luqtz cf oljjtouvjp oqyvjm. uqt oljwthjtw hyj, vjovwtjuyrrf, qyw yj tdkztmmvlj lx meoq wlp-rvbt ztmvpjyuvlj uqyu vu rllbtw ym vx ljt olerw mtu qvh xztt ul zlyh yzlejw uqt mrlktm yjw slerw ljrf qyat ul sqvmurt yu uqt muyzu lx uqt tdtoeuvlj xlz qvh ul ztuezj.
-uqt uzyatrrtz qyw rvuurt vjutztmu vj uqt ykkyzyuem yjw syrbtw cyob yjw xlzuq ctqvjw uqt oljwthjtw hyj, yrhlmu avmvcrf vjwvxxtztju, sqvrt uqt lxxvotz ullb oyzt lx uqt xvjyr kztkyzyuvljm. mlhtuvhtm qt ozysrtw ejwtz uqt ykkyzyuem, sqvoq sym cevru wttk vjul uqt tyzuq, yjw mlhtuvhtm qt orvhctw ek y rywwtz ul vjmktou uqt ekktz kyzum. uqtmt stzt ztyrrf ilcm sqvoq olerw qyat cttj rtxu ul y htoqyjvo, ceu uqt lxxvotz oyzzvtw uqth leu svuq pztyu tjuqemvymh, hyfct ctoyemt qt sym kyzuvoeryzrf xljw lx uqvm ykkyzyuem lz hyfct ctoyemt uqtzt sym mlht luqtz ztymlj sqf ljt olerw jlu uzemu uqt slzb ul yjfljt trmt. “vu’m yrr ztywf jls!” qt xvjyrrf ozvtw yjw orvhctw cyob wlsj uqt rywwtz. qt sym ejemeyrrf uvztw, cztyuqvjp svuq qvm hleuq svwt lktj, yjw qt qyw kemqtw usl xvjt rywf’m qyjwbtzoqvtxm ejwtz uqt olrryz lx qvm ejvxlzh.
-“uqtmt ejvxlzhm yzt ztyrrf ull qtyaf xlz uqt uzlkvom,” uqt uzyatrrtz myvw, vjmutyw lx ymbvjp mlht getmuvljm ycleu uqt ykkyzyuem, ym uqt lxxvotz qyw tdktoutw. “uqyu’m uzet,” myvw uqt lxxvotz. qt symqtw uqt lvr yjw pztymt xzlh qvm wvzuf qyjwm vj y ceobtu lx syutz muyjwvjp ztywf, “ceu uqtf htyj qlht, yjw st wlj’u syju ul rlmt lez qlhtryjw.” “jls, qyat y rllb yu uqvm ykkyzyuem,” qt ywwtw vhhtwvyutrf, wzfvjp qvm qyjwm svuq y ulstr yjw klvjuvjp ul uqt wtavot. “ek ul uqvm klvju v qyw ul wl mlht slzb cf qyjw, ceu xzlh jls lj uqt ykkyzyuem mqlerw slzb tjuvztrf lj vum lsj.” uqt uzyatrrtz jlwwtw yjw xlrrlstw uqt lxxvotz. uqt ryuutz uzvtw ul kzlutou qvhmtrx ypyvjmu yrr tatjueyrvuvtm cf myfvjp, “lx olezmt, cztybwlsjm wl qykktj. v ztyrrf qlkt jljt svrr looez ulwyf, ceu st hemu ct kztkyztw xlz vu. uqt ykkyzyuem vm mekklmtw ul bttk plvjp xlz ustrat qlezm svuqleu vjutzzekuvlj.'"""
+    message = """tcg ldn pd qkudhvc ytge df eg fdcfgykóc itd qdug eg ptdhmd. cv df drgymgpdcmd qvevh... df eg gtfdcykg qd dfadhgcng.
+gcqhéf adcdmhó dc de kcxófakmv ygeeduóc, itdhíg hdytadhgh ft wgeóc adhqkqv. pkhó ge svcqv aghg qklkfgh tc shkó pthv, atdf gitde ygckcv cv eedlgwg g ckcotcg aghmd, mgc fvev dhg eg dcdpkfmgq dcmhd qvf dqkskykvf.
+geov ed eegpó eg gmdcykóc, fd gahvrkpó ge fvekmghkv pthv aghg gqpkhgh yvc gfvpwhv de dfwvnv qd tcg fketdmg sdpdckcg. g adfgh qd fdh kcyvpaedmg fd kcmtíg adhsdyykóc b wdeedng.
+agfghvc geotcvf qígf. gcqhéf hdyvhqó eg fketdmg qde pthv b yvhhkó xgykg deeg ahdfv qd eg ythkvfkqgq.
+gxvhg eg vwhg yvpdcngwg g mdcdh hvfmhv. mhgnvf háakqvf itd qgwgc akfmgf qd qtenthg, ftf pgcvf mgpwkéc dfmgwgc qdskckqgf.
+avyv g avyv eg akcmthg glgcngwg. de ptyxgyxv fd gahdfthgwg ygqg mghqd xgfmg de ygeeduóc. eg kcyvpaedmg ptudh mhgcfpkmíg fdcmkpkdcmvf qdfqd ft lkldng qd yvevhdf. gcqhéf fd fdcmíg gwhgngqv avh deevf. dhg mgc qteyd! mgc wvckmg!
+gitdeeg mghqd agfó xvhgf qkfshtmgcqv qd eg gcóckpg fdñvhg. yhdbó itd eg akcmthg geygcnó ft méhpkcv. ft drahdfkóc dhg lklg b ftf vuvf fvchdígc g adfgh qd itd eg hvqdgwg tc gthg pdegcyóekyg.
+pghyxó mhkfmd, yvcmgokgqv avh eg qgpg itd qteydpdcmd fd mgagwg evf egwkvf yvc evf qdqvf qd eg pgcv.
+gitdeeg cvyxd qdfadhmó fvwhdfgemgqv. qácqvfd ytdcmg qd ev dcmhgqg itd dfmgwg eg cvyxd, dfygaó qd eg ygfg g xthmgqkeegf aghg yvhhdh ge ygeeduóc. ge aíd qd eg akcmthg, dc de ftdev, bgyíg tc gcykgcv! cv hdfakhgwg, dc ft atñv gsdhhgwg tc akcyde b dfmgwg hvqdgqv qd hdmvhykqvf hdykakdcmdf qd akcmthg. gcqhéf genó eg pkhgqg aghg gfvpwhghfd gcmd de hvfmhv qd eg qgpg. egf úemkpgf akcydegqgf qde gcykgcv qkwtughvc eáohkpgf dc gitdeeg dckopámkyg sgn. ge ckñv ev kclgqkdhvc egf ogcgf qd eevhgh. adhv fd hdatfv, ekpakgcqv egf eáohkpgf qd shdfyg akcmthg yvc eg pgcog qd ft akugpg. “cv eevhdf, bg cv mkdcdf avh itd. gxvhg ée dfmá yvc mkov” yvcfveó pkhgcqv ge gcykgcv.
+ugpáf lvelkó ge ygeeduóc. páf avh ptyxv itd kcmdcmó fdh yvxdhdcmd, uthghíg itd mhgf evf qdqvf itd ytwhígc gitdeevf yáekqvf egwkvf, lkó g eg qgpg fvchdíh. 
+adhv fk geotkdc df ygagn qd dcyvcmhgh dfadhgcng qvcqd cv eg xgb... fdothv itd df tc
+ckñv.
+Después de refrescarse el rostro y las manos, se dispuso a reponer fuerzas sacando de su mochila un pedazo de pan y algo de queso. Mientras comía pausadamente, no dejaba de mirar a un lado y a otro como si estuviera asombrado. Había conocido muchos pueblos semejantes a aquél, por eso no se explicaba la rara sensación que lo embargaba:
+"Hummmm, aquí pasa algo! Algo raro tiene este pueblo!, murmuró para sus adentros.
+
+En aquel momento, de una casa cercana a la plaza salió un niño. Con paso cansino se dirigió a la casa de al lado y llamó a la puerta. Al poco rato se le acercó otro niño y ambos se sentaron en el umbral después de un breve saludo.
+Pasaba el tiempo. Los niños no hablaban entre ellos y en sus caras se reflejaban el desgano y el aburrimiento. Uno de ellos tomaba piedrecitas del suelo que luego arrojaba enfrente sin prestar atención, el otro parecía ensimismado en la contemplación de sus uñas...
+El forastero los miraba sorprendido, ya que estaba acostumbrado, al llegar a un nuevo pueblo, a verse rodeado de niños que le preguntaban de dónde venía y hacia dónde iba. Aquellos dos, en cambio, parecían ignorarlo, aunque de vez en cuando lo mirasen de reojo.
+El asombro del forastero fue aumentando cuando vio que otros niños iban reuniéndose alrededor de los dos primeros. Se sentaban en el suelo y permanecían allí sin decirse nada... Qué niños tan raros!
+Precisamente aquella hora, la de la siesta, era la mejor para jugar libremente, lo había sido siempre, por qué no jugaban aquellos niños?, por qué teñían el aburrimiento marcado en sus miradas?
+"""
 
     # Determine the possible valid ciphertext translations.
-    #print('Hacking...')
     letterMapping = hackSimpleSub(message)
-
     # Display the results to the user.
-    #print('Mapping:')
     pprint.pprint(letterMapping)
-    #print()
-    #print('Original ciphertext:')
-    #print(message)
-    #print()
-    #print('Copying hacked message to clipboard:')
     hackedMessage = decryptWithCipherletterMapping(message, letterMapping)
     pyperclip.copy(hackedMessage)
     print(hackedMessage)
@@ -35,7 +45,7 @@ uqt uzyatrrtz qyw rvuurt vjutztmu vj uqt ykkyzyuem yjw syrbtw cyob yjw xlzuq ctq
 
 def getBlankCipherletterMapping():
     # Returns a dictionary value that is a blank cipherletter mapping.
-    return {'A': [], 'B': [], 'C': [], 'D': [], 'E': [], 'F': [], 'G': [], 'H': [], 'I': [], 'J': [], 'K': [], 'L': [], 'M': [], 'N': [], 'O': [], 'P': [], 'Q': [], 'R': [], 'S': [], 'T': [], 'U': [], 'V': [], 'W': [], 'X': [], 'Y': [], 'Z': []}
+    return {'A': [], 'B': [], 'C': [], 'D': [], 'E': [], 'F': [], 'G': [], 'H': [], 'I': [], 'J': [], 'K': [], 'L': [], 'M': [], 'N': [], 'O': [], 'P': [], 'Q': [], 'R': [], 'S': [], 'T': [], 'U': [], 'V': [], 'W': [], 'X': [], 'Y': [], 'Z': [],'Ü':[],'Ñ':[],'Í':[],'Ó':[],'É':[],'Á':[],'Ú':[],'Ç':[],'È':[],'Ï':[],'Û':[],'Ô':[],'Î':[],'Ë':[],'Ê':[],'Ä':[],'Â':[]}
 
 
 def addLettersToMapping(letterMapping, cipherword, candidate):
