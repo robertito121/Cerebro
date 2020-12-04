@@ -16,9 +16,9 @@ def hackVigenere(ciphertext):
     for word in words:
         word = word.strip() # remove the newline at the end
         decryptedText = vigenereCipher.decryptMessage(word, ciphertext)
-        if detectEnglish.isEnglish(decryptedText, wordPercentage=100):
+        if detectEnglish.isEnglish(decryptedText, wordPercentage=50):
             # Check with user to see if the decrypted key has been found.
-            #print('Key ' + str(word) + ': ' + decryptedText[:100])
+            print('Key ' + str(word) + ': ' + decryptedText[:100])
             final_return+='Key ' + str(word) + ': ' + decryptedText[:100]+' '
     #return final_return #This is to be uncommented when the time is up
 if __name__ == '__main__':
