@@ -10,17 +10,19 @@ import wordPatterns
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
 nonLettersOrSpacePattern = re.compile('[^A-Â\s]')
 
-def main():
+
+
+def main(message):
 #This is what is being decrypted
-    message = """"""
+    #message ="""Hey folks, just got a few dozen messages complaining about the influx of upvote begging posts on my way to secure my second multi-billion deal this week for a global conglomerate. Now I don't like interruptions on my private jets when flying to make said deals in the far reaches of the globe but this matter is clearly very important and I would like to address it head on. Today when I walked into my economics class I saw something I dread every time I close my eyes. Someone had brought their new gaming laptop to class. The Forklift he used to bring it was still running idle at the back. I started sweating as I sat down and gazed over at the 700lb beast that was his laptop. He had already reinforced his desk with steel support beams and was in the process of finding an outlet for a power cable thicker than Amy Schumer's thigh. I start shaking. I keep telling myself I'm going to be alright and that there's nothing to worry about. He somehow finds a fucking outlet. Tears are running down my cheeks as I send my last texts to my family saying I love them. The teacher starts the lecture, and the student turns his laptop on. The colored lights on his RGB Backlit keyboard flare to life like a nuclear flash, and a deep humming fills my ears and shakes my very soul. The entire city power grid goes dark. The classroom begins to shake as the massive fans begin to spin.""" ####################################################THIS IS THE INPUT STRING##############################################################
 
     # Determine the possible valid ciphertext translations.
     letterMapping = hackSimpleSub(message)
     # Display the results to the user.
-    pprint.pprint(letterMapping)
+    #pprint.pprint(letterMapping)
     hackedMessage = decryptWithCipherletterMapping(message, letterMapping)
-    pyperclip.copy(hackedMessage)
-    print(hackedMessage)
+    #pyperclip.copy(hackedMessage) This would auto copy the message to clipboard
+    #print(hackedMessage)
     return hackedMessage
 
 def getBlankCipherletterMapping():
@@ -34,7 +36,6 @@ def addLettersToMapping(letterMapping, cipherword, candidate):
     # The cipherword parameter is a string value of the ciphertext word.
     # The candidate parameter is a possible English word that the
     # cipherword could decrypt to.
-
     # This function adds the letters of the candidate as potential
     # decryption letters for the cipherletters in the cipherletter
     # mapping.
@@ -146,4 +147,4 @@ def decryptWithCipherletterMapping(ciphertext, letterMapping):
 
 
 if __name__ == '__main__':
-    main()
+    main("""Today when I walked into my economics class I saw something I dread every time I close my eyes. Someone had brought their new gaming laptop to class. The Forklift he used to bring it was still running idle at the back. I started sweating as I sat down and gazed over at the 700lb beast that was his laptop. He had already reinforced his desk with steel support beams and was in the process of finding an outlet for a power cable thicker than Amy Schumer's thigh. I start shaking. I keep telling myself I'm going to be alright and that there's nothing to worry about. He somehow finds a fucking outlet. Tears are running down my cheeks as I send my last texts to my family saying I love them. The teacher starts the lecture, and the student turns his laptop on. The colored lights on his RGB Backlit keyboard flare to life like a nuclear flash, and a deep humming fills my ears and shakes my very soul. The entire city power grid goes dark. The classroom begins to shake as the massive fans begin to spin.""")

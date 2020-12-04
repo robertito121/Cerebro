@@ -4,9 +4,9 @@
 
 import detectEnglish, vigenereCipher, pyperclip
 
-def main():
-    ciphertext = """Hpüso isä aít áov xçdlë"""
-    hackedMessage = hackVigenere(ciphertext)
+
+#ciphertext = """Hpüso isä aít áov xçdlë""" 
+
    
 def hackVigenere(ciphertext):
     fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt", encoding="utf8")
@@ -18,8 +18,10 @@ def hackVigenere(ciphertext):
         decryptedText = vigenereCipher.decryptMessage(word, ciphertext)
         if detectEnglish.isEnglish(decryptedText, wordPercentage=50):
             # Check with user to see if the decrypted key has been found.
-            print('Key ' + str(word) + ': ' + decryptedText[:100])
+            #print('Key ' + str(word) + ': ' + decryptedText[:100])
             final_return+='Key ' + str(word) + ': ' + decryptedText[:100]+' '
-    #return final_return #This is to be uncommented when the time is up
-if __name__ == '__main__':
-    main()
+    return final_return #This is to be uncommented when the time is up
+
+###############################################################################################
+hackedMessage = hackVigenere(ciphertext)#THIS IS THE FUNCTION TO CALL Vigenere CIPHER### TEXT WILL BE THE STRING READ INTO THE PROGRAM
+###############################################################################################
