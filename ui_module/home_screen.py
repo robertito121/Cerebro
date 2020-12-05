@@ -5,11 +5,16 @@ from PyQt5.QtGui import QGuiApplication
 from pathlib import Path
 from storage_module.dynamo import DynamoModule
 from digital_processing_module.digital_processing import OCR
+from decoder_module.ceasar_hacker import CeasarHacker
+from decoder_module.vigenere_hacker import VigenereHacker
+from decoder_module.simpleSubHacker import simple_sub_hacker
 import time
 
 
 class CerebroHome(QMainWindow):
     closed = pyqtSignal()
+    item_id = ""
+    combo_items = ['Ceaser Cypher', 'Simple Substitution Cypher', 'Vigenere Cypher']
 
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
@@ -139,9 +144,17 @@ class CerebroHome(QMainWindow):
         self.label.setText(_translate("MainWindow", "File name "))
         self.upload_button.setText(_translate("MainWindow", "Upload"))
         self.decode_button.setText(_translate("MainWindow", "Decode"))
+        self.decode_button.clicked.connect(self.decode)
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.upload_button.clicked.connect(self.convert_to_digital_str)
         QGuiApplication.setQuitOnLastWindowClosed(False)
+        self.cyphers_combo_box = QtWidgets.QComboBox(self.centralwidget)
+        self.cyphers_combo_box.setCurrentText("")
+        self.cyphers_combo_box.setObjectName("cyphers_combo_box")
+        self.verticalLayout.addWidget(self.cyphers_combo_box)
+        self.verticalLayout.addWidget(self.decode_button, 0, QtCore.Qt.AlignHCenter)
+        self.cyphers_combo_box.addItems(self.combo_items)
+        self.cyphers_combo_box.setCurrentIndex(0)
 
     def convert_to_digital_str(self):
         file_path = QFileDialog.getOpenFileName()[0]
@@ -152,10 +165,18 @@ class CerebroHome(QMainWindow):
             file_type = Path(file_path).suffix
             self.file_name_field.setText(file_path)
             dynamo = DynamoModule()
-            dynamo.create_item(username, str(time.time()), file_type, str(file_size))
+            self.item_id = dynamo.create_item(username, str(time.time()), file_type, str(file_size))
             digital_string = OCR.handwritten_to_string(file_path)
             self.uploaded_text_field.setText(digital_string)
 
-
-
+    def decode(self):
+        picked_cypher = str(self.cyphers_combo_box.currentText())
+        if 'Ceaser Cypher' in picked_cypher:
+            self.decoded_text_field.setPlainText(CeasarHacker.crack_ceasar(self.uploaded_text_field.toPlainText()))
+        elif 'Simple Substitution Cypher' in picked_cypher:
+            self.decoded_text_field.setPlainText(simple_sub_hacker(self.uploaded_text_field.toPlainText()))
+        elif 'Vigenere Cypher':
+            self.decoded_text_field.setPlainText(VigenereHacker.hackVigenere(self.uploaded_text_field.toPlainText()))
+        dynamo = DynamoModule()
+        dynamo.add_output(self.item_id, self.username_label.text(), self.decoded_text_field.toPlainText())
 

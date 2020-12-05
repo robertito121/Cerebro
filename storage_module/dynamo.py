@@ -9,7 +9,7 @@ class DynamoModule:
 
     def create_item(self, username, epoch_date, file_type, file_size):
         item_id = str(uuid.uuid1())
-        response = self.dynamo_client.put_item(
+        self.dynamo_client.put_item(
             TableName='CerebroOutputs',
             Item={
                 'item_id': {
@@ -27,25 +27,29 @@ class DynamoModule:
                 'file_size': {
                     'N': file_size
                 },
-                'output': {
+                'decoded_output': {
                     'S': ""
                 }
             }
         )
-        return response
+        return item_id
 
-    def add_output(self, item_id, output):
+    def add_output(self, item_id, username, decoded_output):
         response = self.dynamo_client.update_item(
             TableName='CerebroOutputs',
             Key={
                 'item_id': {
                     'S': item_id
+                },
+                'username': {
+                    'S': username
                 }
             },
-            AttributeUpdates={
-                'output': {
-                    'S': output
+            UpdateExpression='SET decoded_output = :decoded_output',
+            ExpressionAttributeValues= {
+                ':decoded_output': {
+                    'S': decoded_output
                 }
-            }
+             }
         )
         return response
