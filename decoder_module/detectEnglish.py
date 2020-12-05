@@ -1,22 +1,17 @@
-# Detect English module
-# http://inventwithpython.com/hacking (BSD Licensed)
-
-# To use, type this code:
-#   import detectEnglish
-#   detectEnglish.isEnglish(someString) # returns True or False
-# (There must be a "dictionary.txt" file in this directory with all English
-# words in it, one word per line. You can download this from
-# http://invpy.com/dictionary.txt)
+import os
 UPPERLETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
 LETTERS_AND_SPACE = UPPERLETTERS + UPPERLETTERS.lower() + ' \t\n'
 
+
 def loadDictionary():
-    dictionaryFile = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt",encoding="utf8")
+    os.chdir('../files')
+    dictionaryFile = open("../files/dictionary.txt", encoding="utf8")
     englishWords = {}
     for word in dictionaryFile.read().split('\n'):
         englishWords[word] = None
     dictionaryFile.close()
     return englishWords
+
 
 ENGLISH_WORDS = loadDictionary()
 
@@ -27,7 +22,7 @@ def getEnglishCount(message):
     possibleWords = message.split()
 
     if possibleWords == []:
-        return 0.0 # no words at all, so return 0.0
+        return 0.0  # no words at all, so return 0.0
 
     matches = 0
     for word in possibleWords:

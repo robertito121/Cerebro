@@ -1,8 +1,5 @@
-# Simple Substitution Cipher
-# http://inventwithpython.com/hacking (BSD Licensed)
-
-import pyperclip, sys, random
-
+import sys, random
+from decoder_module import pyperclip
 
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
 

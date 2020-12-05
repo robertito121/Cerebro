@@ -1,10 +1,3 @@
-# Makes the wordPatterns.py File
-# http://inventwithpython.com/hacking (BSD Licensed)
-
-# Creates wordPatterns.py based on the words in our dictionary
-# text file, dictionary.txt. (Download this file from
-# http://invpy.com/dictionary.txt)
-
 import pprint
 
 
@@ -27,7 +20,7 @@ def getWordPattern(word):
 def main():
     allPatterns = {}
 
-    fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt",encoding="utf8")
+    fo = open(r"dictionary.txt",encoding="utf8")
     wordList = fo.read().split('\n')
     fo.close()
 
