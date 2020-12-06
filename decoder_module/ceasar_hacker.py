@@ -23,14 +23,11 @@ class CeasarHacker:
                     translated = translated + LETTERS[num]
                 else:
                     translated = translated + symbol
-                for word in words:
-                    word = word.strip()  # remove the newline at the end
-                    if detectEnglish.isEnglish(translated, wordPercentage=30):
+                if detectEnglish.isEnglish(translated, wordPercentage=100):
+                    if len(translated)==len(string):
                         final_output += translated + '\n'
-                        # print('Key #%s: %s' % (key, translated))  # This is for test printing
-                        break
         if final_output != '':
-            # print(final_output)
             return final_output
         if final_output == '':
             return "There was no crack found. Ensure that you are correctly copying your cipher."
+#print(CeasarHacker.crack_ceasar('SUXHED')) #This is a testing output

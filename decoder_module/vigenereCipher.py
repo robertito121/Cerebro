@@ -1,13 +1,14 @@
 from decoder_module import pyperclip
 
-LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
-
+#LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
+LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 def main():
     # This text can be copy/pasted from http://invpy.com/vigenereCipher.py
-    myMessage = """Hello how are you today"""
+    myMessage = """FAIRE EXPLOSER LA BOMBE"""
     myKey = 'ALPHABET'
     myMode = 'encrypt' # set to 'encrypt' or 'decrypt'
-
+    #message='FLXYE FBILZHLR ME UOXQL'
+    #key='ALPHABET'
     if myMode == 'encrypt':
         translated = encryptMessage(myKey, myMessage)
     elif myMode == 'decrypt':
@@ -18,18 +19,20 @@ def main():
     pyperclip.copy(translated)
     print()
     print('The message has been copied to the clipboard.')
-
+    #decryptMessage(key, message)
 
 def encryptMessage(key, message):
+    #print(translateMessage(key, message, 'encrypt'))
     return translateMessage(key, message, 'encrypt')
-
+#FLXYE FNELZOLR ME UOXQL
 
 def decryptMessage(key, message):
+    #print(translateMessage(key, message, 'decrypt'))
     return translateMessage(key, message, 'decrypt')
+
 
 def translateMessage(key, message, mode):
     translated = [] # stores the encrypted/decrypted message string
-
     keyIndex = 0
     key = key.upper()
 
@@ -63,3 +66,4 @@ def translateMessage(key, message, mode):
 # the main() function.
 if __name__ == '__main__':
     main()
+

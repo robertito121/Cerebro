@@ -20,7 +20,7 @@ def getWordPattern(word):
 def main():
     allPatterns = {}
 
-    fo = open(r"dictionary.txt",encoding="utf8")
+    fo = open(r"../files/dictionary.txt", encoding="utf8")
     wordList = fo.read().split('\n')
     fo.close()
 

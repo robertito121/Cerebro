@@ -4,8 +4,8 @@ from decoder_module import pyperclip
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
 
 def main():
-    myMessage = 'If a man is offered a fact which goes against his instincts, he will scrutinize it closely, and unless the evidence is overwhelming, he will refuse to believe it. If, on the other hand, he is offered something which affords a reason for acting in accordance to his instincts, he will accept it even on the slightest evidence. The origin of myths is explained in this way. -Bertrand Russell'
-    myKey = 'LFWOAYUISVKMNXPBDCRJTQEGHZ'
+    myMessage = """I THOUGHT NOT. IT'S NOT A STORY THE JEDI WOULD TELL YOU. IT'S A SITH LEGEND. DARTH PLAGUEIS WAS A DARK LORD OF THE SITH, SO POWERFUL AND SO WISE HE COULD USE THE FORCE TO INFLUENCE THE MIDICHLORIANS TO CREATE LIFE... HE HAD SUCH A KNOWLEDGE OF THE DARK SIDE THAT HE COULD EVEN KEEP THE ONES HE CARED ABOUT FROM DYING. THE DARK SIDE OF THE FORCE IS A PATHWAY TO MANY ABILITIES SOME CONSIDER TO BE UNNATURAL. HE BECAME SO POWERFUL... THE ONLY THING HE WAS AFRAID OF WAS LOSING HIS POWER, WHICH EVENTUALLY, OF COURSE, HE DID. UNFORTUNATELY, HE TAUGHT HIS APPRENTICE EVERYTHING HE KNEW, THEN HIS APPRENTICE KILLED HIM IN HIS SLEEP. IT'S IRONIC HE COULD SAVE OTHERS FROM DEATH, BUT NOT HIMSELF."""
+    myKey = 'LFWOAYUISVKMNXPBDCRJTQEGHZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'
     myMode = 'encrypt' # set to 'encrypt' or 'decrypt'
 
     checkValidKey(myKey)

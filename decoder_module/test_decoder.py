@@ -14,7 +14,7 @@ def crack_ceasar(string):
         # message = 'GUVF VF ZL FRPERG ZRFFNTR.'#This is here for testing purposes
         LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÜÑÍÓÉÁÚÇÈÏÛÔÎËÊÄÂ'  # This is the alpahabet that will be used for the ceaser cipher 
         final_output = ''#String to store outputs and then be returned at good
-        fo = open(r"C:\Users\grant\Documents\GitHub\Cerebro\decoder_module\dictionary.txt",encoding='utf8')
+        fo = open(r"/files/dictionary.txt", encoding='utf8')
         words = fo.readlines()
         fo.close()
         for key in range(len(LETTERS)):     #Loops through each alpahbet combination to crack cipher
@@ -39,3 +39,4 @@ def crack_ceasar(string):
 crack_ceasar("SUXHED")#THIS IS WHAT YOU CALL TO RUN THE CEASAR METHOD
 ##########################################################################################################################################################
 handwritten_to_string(r"C:\Users\grant\Documents\GitHub\Cerebro\administrative_module\Spanish_ceasar_test.png")
+
